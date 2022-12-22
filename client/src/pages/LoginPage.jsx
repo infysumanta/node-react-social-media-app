@@ -8,8 +8,8 @@ import { connect } from "react-redux";
 import { getAuthAction } from "../redux/actions/authActions";
 const LoginPage = ({ login }) => {
   const navigate = useNavigate();
-  const [username, setUsername] = useState("sumanta");
-  const [password, setPassword] = useState("Sumanta@1998");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState({
     username: "",
     password: "",
