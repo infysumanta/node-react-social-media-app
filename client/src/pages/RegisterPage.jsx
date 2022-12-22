@@ -1,22 +1,71 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Button from "../components/Form/Button";
 import Input from "../components/Form/Input";
+import Select from "../components/Form/Select";
+import axios from "axios";
+import toast from "react-hot-toast";
+import { connect } from "react-redux";
+import { getAuthAction } from "../redux/actions/authActions";
 
-const RegisterPage = () => {
+const RegisterPage = ({ register }) => {
+  const navigate = useNavigate();
+
   const [name, setName] = useState("");
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [gender, setGender] = useState("male");
   const [dob, setDOB] = useState("");
   const [error, setError] = useState({
+    name: "",
     username: "",
+    email: "",
     password: "",
+    gender: "",
+    dob: "",
   });
+
+  const resetForm = () => {
+    setName("");
+    setUsername("");
+    setEmail("");
+    setPassword("");
+    setGender("");
+    setDOB("");
+    setError({
+      name: "",
+      username: "",
+      email: "",
+      password: "",
+      gender: "",
+      dob: "",
+    });
+  };
 
   const handleRegister = (e) => {
     e.preventDefault();
-    console.log(username, password, name, dob, email);
+    let body = {
+      name,
+      username,
+      email,
+      password,
+      gender,
+      dob,
+    };
+    setError((prevState) => ({
+      name: !name ? "Name is Required" : "",
+      username: !username ? "Username is Required" : "",
+      email: !email ? "Email is Required" : "",
+      password: !password ? "Password is Required" : "",
+      gender: !gender ? "Gender is Required" : "",
+      dob: !dob ? "Date of Birth is Required" : "",
+    }));
+
+    if (!name || !username || !email || !password || !gender || !dob) {
+      return;
+    }
+    register(body, navigate);
   };
   return (
     <div className="h-screen flex items-center justify-center bg-pink-100">
@@ -66,9 +115,23 @@ const RegisterPage = () => {
                 name="password"
                 setValue={setPassword}
                 text="Password"
-                type="text"
+                type="password"
                 value={password}
                 error={error.password}
+              />
+            </div>
+            <div className="mt-4">
+              <Select
+                name="gender"
+                text="Gender"
+                error={error.gender}
+                setValue={setGender}
+                value={gender}
+                data={[
+                  { key: "male", text: "Male" },
+                  { key: "female", text: "Female" },
+                  { key: "other", text: "Other" },
+                ]}
               />
             </div>
             <div className="mt-4">
@@ -106,4 +169,10 @@ const RegisterPage = () => {
   );
 };
 
-export default RegisterPage;
+const mapActionToProps = (dispatch) => {
+  return {
+    ...getAuthAction(dispatch),
+  };
+};
+
+export default connect(null, mapActionToProps)(RegisterPage);

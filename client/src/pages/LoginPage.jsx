@@ -1,18 +1,42 @@
+import axios from "axios";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { toast } from "react-hot-toast";
+import { Link, useNavigate } from "react-router-dom";
 import Button from "../components/Form/Button";
 import Input from "../components/Form/Input";
-const LoginPage = () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+import { connect } from "react-redux";
+import { getAuthAction } from "../redux/actions/authActions";
+const LoginPage = ({ login }) => {
+  const navigate = useNavigate();
+  const [username, setUsername] = useState("sumanta");
+  const [password, setPassword] = useState("Sumanta@1998");
   const [error, setError] = useState({
     username: "",
     password: "",
   });
 
+  const resetForm = () => {
+    setUsername("");
+    setPassword("");
+    setError({
+      username: "",
+      password: "",
+    });
+  };
+
   const handleLogin = (e) => {
     e.preventDefault();
-    console.log(username, password);
+    setError((prevState) => ({
+      username: !username ? "Username is Required" : "",
+      password: !password ? "Password is Required" : "",
+    }));
+
+    if (!username || !password) {
+      return;
+    }
+
+    let body = { username, password };
+    login(body, navigate);
   };
 
   return (
@@ -45,7 +69,7 @@ const LoginPage = () => {
                 name="password"
                 setValue={setPassword}
                 text="Password"
-                type="text"
+                type="password"
                 value={password}
                 error={error.password}
               />
@@ -75,4 +99,10 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+const mapActionToProps = (dispatch) => {
+  return {
+    ...getAuthAction(dispatch),
+  };
+};
+
+export default connect(null, mapActionToProps)(LoginPage);
