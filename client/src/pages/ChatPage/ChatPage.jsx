@@ -1,7 +1,32 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useState } from "react";
 import Layout from "../../components/Layouts/Layout";
+import { useParams, useNavigate } from "react-router-dom";
+import ChatLeft from "./ChatLeft";
+import ChatRight from "./ChatRight";
+import ChatInput from "./ChatInput";
+import UserChatProfile from "./UserChatProfile";
+let userList = [
+  {
+    _id: "1",
+    name: "Sumanta Kabiraj",
+    username: "sumanta",
+  },
+  { _id: "2", name: "Name One", username: "nameone" },
+  { _id: "3", name: "Name Two", username: "nametwo" },
+  { _id: "4", name: "Name Three", username: "namethree" },
+  { _id: "5", name: "Name Four", username: "namefour" },
+];
 
 const ChatPage = () => {
+  const [chatUser, setChatUser] = useState(userList[0]);
+  const navigate = useNavigate();
+  let { user_id } = useParams();
+  useEffect(() => {
+    navigate(`/chats/${user_id}`);
+    // userList.map(({ _id, index }) => setChatUser(userList[index]));
+  }, [chatUser]);
+
   return (
     <Layout>
       <div className="w-full lg:w-1/2 m-auto bg-white p-3 shadow rounded-lg mt-5">
@@ -12,39 +37,58 @@ const ChatPage = () => {
           </div>
         </div>
         <div className="flex flex-row justify-between bg-white border rounded-lg">
-          <div class="flex flex-col w-2/5 border-r-2 h-[35rem]">
-            <div class="border-b-2 py-4 px-2">
+          <div className="flex flex-col w-2/5 border-r-2 h-[35rem]">
+            <div className="border-b-2 py-4 px-2">
               <input
                 type="text"
                 placeholder="search chatting"
-                class="py-2 px-2 border-2 border-gray-200 rounded-2xl w-full"
+                className="py-2 px-2 border-2 border-gray-200 rounded-2xl w-full"
               />
             </div>
 
             <div className=" overflow-y-auto">
-              <UserProfile />
-              <UserProfile />
-              <UserProfile />
-              <UserProfile />
-              <UserProfile />
-              <UserProfile />
-              <UserProfile />
+              {userList &&
+                userList.map((user, index) => (
+                  <UserChatProfile
+                    user={user}
+                    chatUser={chatUser}
+                    key={user._id}
+                    setChatUser={setChatUser}
+                  />
+                ))}
             </div>
           </div>
-          <div class="w-full px-5 flex flex-col justify-between">
-            <div class="flex flex-col mt-5 overflow-y-scroll h-[32rem]">
-              <ChatLeft />
-              <ChatRight />
-              <ChatLeft />
-              <ChatRight />
-              <ChatLeft />
-              <ChatRight />
-              <ChatLeft />
-              <ChatRight />
-              <ChatLeft />
-              <ChatRight />
-              <ChatLeft />
-              <ChatRight />
+          <div className="w-full px-5 flex flex-col justify-between">
+            <div className="flex flex-col h-[35rem]">
+              <div className="py-2 px-2">
+                <div className="flex flex-row py-2 px-2 items-center border-b-2">
+                  <div className="mr-2">
+                    <img
+                      src="https://source.unsplash.com/otT2199XwI8/600x600"
+                      className="object-cover h-12 w-12 rounded-full"
+                      alt=""
+                    />
+                  </div>
+                  <div className="">
+                    <div className="text-lg font-semibold">{chatUser.name}</div>
+                    <span className="text-gray-500">@{chatUser.username}</span>
+                  </div>
+                </div>
+              </div>
+              <div className="overflow-y-auto">
+                <ChatLeft />
+                <ChatRight />
+                <ChatLeft />
+                <ChatRight />
+                <ChatLeft />
+                <ChatRight />
+                <ChatLeft />
+                <ChatRight />
+                <ChatLeft />
+                <ChatRight />
+                <ChatLeft />
+                <ChatRight />
+              </div>
             </div>
             <ChatInput />
           </div>
@@ -54,67 +98,4 @@ const ChatPage = () => {
   );
 };
 
-const UserProfile = () => {
-  return (
-    <div class="flex flex-row py-4 px-2 items-center border-b-2">
-      <div class="w-1/4">
-        <img
-          src="https://source.unsplash.com/otT2199XwI8/600x600"
-          class="object-cover h-12 w-12 rounded-full"
-          alt=""
-        />
-      </div>
-      <div class="w-full">
-        <div class="text-lg font-semibold">Everest Trip 2021</div>
-        <span class="text-gray-500">Hi Sam, Welcome</span>
-      </div>
-    </div>
-  );
-};
-
-const ChatLeft = () => {
-  return (
-    <>
-      <div class="flex justify-start mb-4">
-        <img
-          src="https://source.unsplash.com/vpOeXr5wmR4/600x600"
-          class="object-cover h-8 w-8 rounded-full"
-          alt=""
-        />
-        <div class="ml-2 py-3 px-4 bg-gray-400 rounded-br-3xl rounded-tr-3xl rounded-tl-xl text-white">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit.
-        </div>
-      </div>
-    </>
-  );
-};
-
-const ChatRight = () => {
-  return (
-    <>
-      <div class="flex justify-end mb-4">
-        <div class="mr-2 py-3 px-4 bg-blue-400 rounded-bl-3xl rounded-tl-3xl rounded-tr-xl text-white">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit.
-        </div>
-        <img
-          src="https://source.unsplash.com/vpOeXr5wmR4/600x600"
-          class="object-cover h-8 w-8 rounded-full"
-          alt=""
-        />
-      </div>
-    </>
-  );
-};
-
-const ChatInput = () => {
-  return (
-    <div class="py-5">
-      <input
-        class="w-full bg-gray-300 py-5 px-3 rounded-xl"
-        type="text"
-        placeholder="type your message here..."
-      />
-    </div>
-  );
-};
 export default ChatPage;

@@ -7,6 +7,7 @@ import ProfilePage from "./pages/ProfilePage/ProfilePage";
 import ChatPage from "./pages/ChatPage/ChatPage";
 import SettingsPage from "./pages/SettingsPage/SettingsPage";
 import NotificationPage from "./pages/NotificationPage/NotificationPage";
+import NotFound from "./pages/NotFound";
 function App() {
   return (
     <>
@@ -16,9 +17,10 @@ function App() {
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/user/:username" element={<ProfilePage />} />
         <Route path="/chats" element={<ChatPage />} />
-        <Route path="/chats/:id" element={<ChatPage />} />
+        <Route path="/chats/:user_id" element={<ChatPage />} />
         <Route path="/settings" element={<SettingsPage />} />
         <Route path="/notifications" element={<NotificationPage />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </>
   );
