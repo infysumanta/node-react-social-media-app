@@ -16,6 +16,7 @@ function App() {
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/user/:username" element={<ProfilePage />} />
         <Route path="/chats" element={<ChatPage />} />
+        <Route path="/chats/:id" element={<ChatPage />} />
         <Route path="/settings" element={<SettingsPage />} />
         <Route path="/notifications" element={<NotificationPage />} />
       </Routes>

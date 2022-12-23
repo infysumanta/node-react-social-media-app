@@ -35,7 +35,13 @@ const userSchema = new mongoose.Schema(
       required: true,
       default: "user",
     },
-    friends: {
+    friends: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+      },
+    ],
+    notifications: {
       type: Array,
       default: [],
     },

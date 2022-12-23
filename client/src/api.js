@@ -97,3 +97,45 @@ export const getUserListBySearch = async (search) => {
     };
   }
 };
+
+export const sendFriendRequest = async (data) => {
+  try {
+    return {
+      success: true,
+      response: await authInstance.post(`/user/send-friend-request`, data),
+    };
+  } catch (response) {
+    return {
+      success: false,
+      response: response,
+    };
+  }
+};
+
+export const cancelFriendRequest = async (data) => {
+  try {
+    return {
+      success: true,
+      response: await authInstance.post(`/user/cancel-friend-request`, data),
+    };
+  } catch (response) {
+    return {
+      success: false,
+      response: response,
+    };
+  }
+};
+
+export const confirmFriendRequest = async (data) => {
+  try {
+    return {
+      success: true,
+      response: await authInstance.post(`/user/confirm-friend-request`, data),
+    };
+  } catch (response) {
+    return {
+      success: false,
+      response: response,
+    };
+  }
+};
