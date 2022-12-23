@@ -16,7 +16,7 @@ const Layout = ({ children }) => {
   return (
     <>
       <Header />
-      <div className="pt-[4rem] bg-gray-100">{children}</div>
+      <div className="py-[4rem] bg-gray-100">{children}</div>
       <Footer />
     </>
   );
