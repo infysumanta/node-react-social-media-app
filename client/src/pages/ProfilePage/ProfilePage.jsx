@@ -37,17 +37,17 @@ const ProfilePage = () => {
   const pageChoose = () => {
     switch (profileMenu) {
       case menuList.POSTS:
-        return <PostsContain />;
+        return <PostsContain user={user} />;
       case menuList.ABOUT:
-        return <AboutContain />;
+        return <AboutContain user={user} />;
       case menuList.FRIENDS:
-        return <FriendsContains />;
+        return <FriendsContains user={user} />;
       case menuList.PHOTOS:
-        return <PhotosContain />;
+        return <PhotosContain user={user} />;
       case menuList.EVENTS:
-        return <EventsContains />;
+        return <EventsContains user={user} />;
       default:
-        return <PostsContain />;
+        return <PostsContain user={user} />;
     }
   };
 

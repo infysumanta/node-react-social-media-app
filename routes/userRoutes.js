@@ -6,6 +6,7 @@ const {
   sendFriendRequest,
   cancelFriendRequest,
   confirmFriendRequest,
+  getFriendsList,
 } = require("../controllers/userController");
 const { verifyAuth } = require("../middleware/auth");
 const router = express.Router();
@@ -15,6 +16,8 @@ router.use(verifyAuth);
 router.route("/get-user-details").post(getUserDetails);
 router.route("/get-user-details/:username").get(getUserDetailsByUsername);
 router.route("/get-user-list-search").get(getUserListBySearch);
+
+router.route("/get-user-friends-list/:user_id").get(getFriendsList);
 
 router.route("/send-friend-request").post(sendFriendRequest);
 router.route("/cancel-friend-request").post(cancelFriendRequest);

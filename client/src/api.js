@@ -139,3 +139,17 @@ export const confirmFriendRequest = async (data) => {
     };
   }
 };
+
+export const getUserFriendsList = async (userId) => {
+  try {
+    return {
+      success: true,
+      response: await authInstance.get(`/user/get-user-friends-list/${userId}`),
+    };
+  } catch (response) {
+    return {
+      success: false,
+      response: response,
+    };
+  }
+};

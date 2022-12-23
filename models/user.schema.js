@@ -41,10 +41,26 @@ const userSchema = new mongoose.Schema(
         ref: "User",
       },
     ],
-    notifications: {
-      type: Array,
-      default: [],
-    },
+    notifications: [
+      {
+        title: {
+          type: String,
+          required: true,
+        },
+        description: {
+          type: String,
+          required: true,
+        },
+        meta: {
+          type: Object,
+        },
+        date: {
+          type: Date,
+          default: new Date(),
+          required: true,
+        },
+      },
+    ],
   },
 
   { timestamps: true }

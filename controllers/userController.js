@@ -84,6 +84,24 @@ exports.getUserListBySearch = async (req, res) => {
   }
 };
 
+exports.getFriendsList = async (req, res) => {
+  try {
+    const user_id = req.params.user_id;
+    const user = await User.findById(user_id).populate("friends");
+    return res.status(200).json({
+      success: true,
+      friends: user.friends,
+      message: "Request Send",
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      success: false,
+      message: "Something went wrong!",
+    });
+  }
+};
+
 exports.sendFriendRequest = async (req, res) => {
   try {
     const from = req.user._id;
@@ -113,6 +131,15 @@ exports.sendFriendRequest = async (req, res) => {
       from,
       to,
     });
+
+    const user = await User.findById(to);
+    const notification = {
+      title: "Friend Request",
+      description: "Send you Friend Request",
+    };
+
+    user.notifications.push(notification);
+    await user.save();
 
     await request.save();
 
@@ -168,6 +195,7 @@ exports.cancelFriendRequest = async (req, res) => {
     });
   }
 };
+
 exports.confirmFriendRequest = async (req, res) => {
   try {
     const from = req.user._id;

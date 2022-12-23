@@ -67,7 +67,7 @@ exports.login = async (req, res) => {
       });
     }
 
-    const user = await User.findOne({ username: username });
+    const user = await User.findOne({ username: username }).select("-friends");
 
     if (user && (await bcrypt.compare(password, user.password))) {
       const token = jwt.sign({ id: user._id }, config.JWT_SECRET, {
