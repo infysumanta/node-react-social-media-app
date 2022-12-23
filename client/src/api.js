@@ -81,3 +81,19 @@ export const getUserDetailsByUsername = async (username) => {
     };
   }
 };
+
+export const getUserListBySearch = async (search) => {
+  try {
+    return {
+      success: true,
+      response: await authInstance.get(
+        `/user/get-user-list-search?search=${search}`
+      ),
+    };
+  } catch (response) {
+    return {
+      success: false,
+      response: response,
+    };
+  }
+};

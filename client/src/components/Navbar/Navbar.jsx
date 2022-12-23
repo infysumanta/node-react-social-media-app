@@ -12,13 +12,22 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../redux/actions/authActions";
 import { Link, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { getUserListBySearch } from "./../../api";
 const Navbar = () => {
   const [mode, setMode] = useState(true);
   const [userNavMenuShow, setUserNavMenuShow] = useState(false);
+  const [search, setSearch] = useState("");
+  const [searchList, setSearchList] = useState([]);
   const auth = useSelector((state) => state.auth);
   const dispath = useDispatch();
   const navigate = useNavigate();
 
+  const searchHandler = async (e) => {
+    setSearch(e.target.value);
+    const user = await getUserListBySearch(search);
+    setSearchList(user.response?.data?.users);
+  };
   return (
     <nav className="flex items-center justify-between shadow-md py-1 px-5 bg-white">
       <div className="m-2">
@@ -32,12 +41,24 @@ const Navbar = () => {
           <input
             type="text"
             placeholder="Search..."
+            onChange={searchHandler}
             className="p-2 text-sm w-full  transition ease-in-out focus:bg-white focus:border-pink-600 focus:outline-none"
           />
           <span>
             <MdSearch className="text-2xl text-pink-700" />
           </span>
         </div>
+        {search && (
+          <div className="absolute bg-white rounded w-1/3 mt-1 p-2 shadow border">
+            {searchList.length <= 0 && (
+              <span className="text-sm">Not Found ..</span>
+            )}
+            {searchList &&
+              searchList.map((list, index) => (
+                <SearchList user={list} key={index} setSearch={setSearch} />
+              ))}
+          </div>
+        )}
       </div>
       <div className="flex items-center justify-between flex-wrap text-pink-700">
         {/* dark/light */}
@@ -86,6 +107,25 @@ const Navbar = () => {
         </div>
       </div>
     </nav>
+  );
+};
+
+const SearchList = ({ user, setSearch }) => {
+  return (
+    <Link
+      className="flex items-center justify-between border shadow rounded p-2"
+      to={`/user/@${user.username}`}
+      onClick={() => {
+        setSearch("");
+      }}
+    >
+      <div className="bg-blue-200 text-xl mr-2 border border-blue-900 p-2  font-bold">
+        {user.name && user.name.slice(0, 1)}
+      </div>
+      <div className="flex-grow text-lg ">
+        {user.name} (@{user.username})
+      </div>
+    </Link>
   );
 };
 
