@@ -9,6 +9,7 @@ import AboutContain from "./MenuContain/AboutContain";
 import FriendsContains from "./MenuContain/FriendsContains";
 import PhotosContain from "./MenuContain/PhotosContain";
 import EventsContains from "./MenuContain/EventsContains";
+import { getUserDetailsByUsername } from "./../../api";
 const ProfilePage = () => {
   let menuList = {
     POSTS: "posts",
@@ -18,13 +19,20 @@ const ProfilePage = () => {
     EVENTS: "events",
   };
   const [profileMenu, setProfileMenu] = useState(menuList.POSTS);
-
+  const [user, setUser] = useState({});
   let { username } = useParams();
   if (username.includes("@")) {
     username = username.slice(1);
   }
 
-  useEffect(() => {});
+  const getUser = async (username) => {
+    const res = await getUserDetailsByUsername(username);
+    setUser(res.response?.data?.user);
+  };
+
+  useEffect(() => {
+    getUser(username);
+  }, [username]);
 
   const pageChoose = () => {
     switch (profileMenu) {
@@ -45,15 +53,17 @@ const ProfilePage = () => {
 
   return (
     <Layout>
-      <div className="w-full lg:w-1/2 m-auto">
-        <ProfileTop />
-        <ProfileMenu
-          profileMenu={profileMenu}
-          setProfileMenu={setProfileMenu}
-          menuList={menuList}
-        />
-        <div className="w-fullh-auto mt-5">{pageChoose()}</div>
-      </div>
+      {user && (
+        <div className="w-full lg:w-1/2 m-auto">
+          <ProfileTop user={user} />
+          <ProfileMenu
+            profileMenu={profileMenu}
+            setProfileMenu={setProfileMenu}
+            menuList={menuList}
+          />
+          <div className="w-fullh-auto mt-5">{pageChoose()}</div>
+        </div>
+      )}
     </Layout>
   );
 };

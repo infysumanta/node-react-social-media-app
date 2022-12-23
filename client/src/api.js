@@ -67,3 +67,17 @@ export const getUserDetails = async () => {
     };
   }
 };
+
+export const getUserDetailsByUsername = async (username) => {
+  try {
+    return {
+      success: true,
+      response: await authInstance.get(`/user/get-user-details/${username}`),
+    };
+  } catch (response) {
+    return {
+      success: false,
+      response: response,
+    };
+  }
+};
