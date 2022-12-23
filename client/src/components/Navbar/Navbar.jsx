@@ -69,17 +69,26 @@ const Navbar = () => {
           {mode ? <MdDarkMode /> : <MdWbSunny />}
         </div>
         {/* Settings */}
-        <div className="text-3xl cursor-pointer px-3 text-pink-700">
+        <Link
+          className="text-3xl cursor-pointer px-3 text-pink-700"
+          to="/settings"
+        >
           <MdOutlineSettingsSuggest />
-        </div>
+        </Link>
         {/* Chat */}
-        <div className="text-3xl cursor-pointer px-3 text-pink-700">
+        <Link
+          className="text-3xl cursor-pointer px-3 text-pink-700"
+          to="/chats"
+        >
           <MdOutlineChat />
-        </div>
+        </Link>
         {/* Notification */}
-        <div className="text-3xl cursor-pointer px-3 text-pink-700">
+        <Link
+          className="text-3xl cursor-pointer px-3 text-pink-700"
+          to="/notifications"
+        >
           <MdOutlineNotificationsActive />
-        </div>
+        </Link>
         {/* UserProfile */}
         <div
           className="text-3xl cursor-pointer px-3 text-pink-700"
