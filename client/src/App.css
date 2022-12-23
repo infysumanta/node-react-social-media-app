@@ -17,3 +17,7 @@
 ::-webkit-scrollbar-thumb:hover {
   background: rgb(196, 2, 60);
 }
+
+.dropdown:hover .dropdown-menu {
+  display: block;
+}

@@ -9,8 +9,16 @@ import {
   MdSearch,
 } from "react-icons/md";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../../redux/actions/authActions";
+import { Link, useNavigate } from "react-router-dom";
 const Navbar = () => {
   const [mode, setMode] = useState(true);
+  const [userNavMenuShow, setUserNavMenuShow] = useState(false);
+  const auth = useSelector((state) => state.auth);
+  const dispath = useDispatch();
+  const navigate = useNavigate();
+
   return (
     <nav className="flex items-center justify-between shadow-md py-1 px-5 bg-white">
       <div className="m-2">
@@ -52,8 +60,29 @@ const Navbar = () => {
           <MdOutlineNotificationsActive />
         </div>
         {/* UserProfile */}
-        <div className="text-3xl cursor-pointer px-3 text-pink-700">
+        <div
+          className="text-3xl cursor-pointer px-3 text-pink-700"
+          onMouseOver={() => setUserNavMenuShow(true)}
+          onMouseLeave={() => setUserNavMenuShow(false)}
+        >
           <MdSupervisedUserCircle />
+          {userNavMenuShow && (
+            <div className="absolute flex right-2 bg-white rounded shadow-lg flex-col text-base border w-48">
+              <Link className="px-4 py-2" to="/profile">
+                @{auth.user.username}
+              </Link>
+              <hr />
+              <hr />
+              <div
+                className="px-4 py-2"
+                onClick={() => {
+                  dispath(logout(navigate));
+                }}
+              >
+                Logout
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </nav>

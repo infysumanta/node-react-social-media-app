@@ -6,6 +6,8 @@ export const getAuthAction = (dispatch) => {
   return {
     login: (data, navigate) => dispatch(login(data, navigate)),
     register: (data, navigate) => dispatch(register(data, navigate)),
+    getUserDetails: (navigate) => dispatch(getUserDetails(navigate)),
+    logout: (navigate) => dispatch(logout(navigate)),
   };
 };
 
@@ -42,6 +44,31 @@ const register = (data, navigate) => {
     } else {
       toast.success(response.response.data?.message);
       navigate("/login");
+    }
+  };
+};
+
+const deleteUserDetails = () => {
+  return {
+    type: authTypes.LOG_OUT,
+  };
+};
+
+export const logout = (navigate) => {
+  return async (dispatch) => {
+    localStorage.removeItem("user-login-token");
+    dispatch(deleteUserDetails());
+    navigate("/login");
+  };
+};
+
+export const getUserDetails = (navigate) => {
+  return async (dispatch) => {
+    const response = await api.getUserDetails();
+
+    if (!response.success) {
+      console.log(response);
+      dispatch(logout(navigate));
     }
   };
 };

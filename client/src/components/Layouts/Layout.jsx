@@ -1,8 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { getUserDetails } from "../../redux/actions/authActions";
 import Footer from "./Footer";
 import Header from "./Header";
 
 const Layout = ({ children }) => {
+  const auth = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (!auth.user?.token) navigate("/login");
+    dispatch(getUserDetails(navigate));
+  });
   return (
     <>
       <Header />
