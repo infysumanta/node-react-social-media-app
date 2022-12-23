@@ -54,13 +54,14 @@ const ProfilePage = () => {
   return (
     <Layout>
       {user && (
-        <div className="w-full lg:w-1/2 m-auto">
+        <div className="w-full lg:w-1/2 m-auto mt-5">
           <ProfileTop user={user} />
           <ProfileMenu
             profileMenu={profileMenu}
             setProfileMenu={setProfileMenu}
             menuList={menuList}
           />
+
           <div className="w-fullh-auto mt-5">{pageChoose()}</div>
         </div>
       )}

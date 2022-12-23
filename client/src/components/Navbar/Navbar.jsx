@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   MdDarkMode,
   MdWbSunny,
@@ -12,16 +12,17 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../redux/actions/authActions";
 import { Link, useNavigate } from "react-router-dom";
-import { useEffect } from "react";
 import { getUserListBySearch } from "./../../api";
+import { darkMode, lightMode } from "../../redux/actions/themeActions";
 const Navbar = () => {
-  const [mode, setMode] = useState(true);
   const [userNavMenuShow, setUserNavMenuShow] = useState(false);
   const [search, setSearch] = useState("");
   const [searchList, setSearchList] = useState([]);
   const auth = useSelector((state) => state.auth);
   const dispath = useDispatch();
   const navigate = useNavigate();
+
+  const theme = useSelector((state) => state.theme.theme);
 
   const searchHandler = async (e) => {
     setSearch(e.target.value);
@@ -34,7 +35,9 @@ const Navbar = () => {
         <span className="text-xl font-bold bg-pink-700 text-white rounded-lg p-2">
           NS
         </span>
-        <span className="px-3 font-bold text-pink-700 text-2xl">NodeReact</span>
+        <Link className="px-3 font-bold text-pink-700 text-2xl" to="/">
+          NodeReact
+        </Link>
       </div>
       <div className="flex-grow px-5">
         <div className="flex items-center justify-between rounded-lg border px-3 border-pink-400 focus:border-pink-600">
@@ -62,11 +65,20 @@ const Navbar = () => {
       </div>
       <div className="flex items-center justify-between flex-wrap text-pink-700">
         {/* dark/light */}
-        <div
-          className="text-3xl cursor-pointer px-3"
-          onClick={() => setMode(!mode)}
-        >
-          {mode ? <MdDarkMode /> : <MdWbSunny />}
+        <div className="text-3xl cursor-pointer px-3">
+          {theme === "dark" ? (
+            <MdDarkMode
+              onClick={() => {
+                dispath(lightMode());
+              }}
+            />
+          ) : (
+            <MdWbSunny
+              onClick={() => {
+                dispath(darkMode());
+              }}
+            />
+          )}
         </div>
         {/* Settings */}
         <Link

@@ -12,8 +12,8 @@ const ProfileTop = ({ user }) => {
             {user.name && user.name.slice(0, 1)}
           </div>
           <div className="flex flex-col ml-5">
-            <div className="text-3xl">{user.name}</div>
-            <div>{user.friends && user.friends.length} Friends | </div>
+            <div className="text-3xl font-bold">{user.name}</div>
+            <div>{user.friends && user.friends.length} Friends</div>
           </div>
         </div>
         <div className="flex flex-row ml-5">
