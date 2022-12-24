@@ -58,7 +58,7 @@ export const getUserDetails = async () => {
   try {
     return {
       success: true,
-      response: await authInstance.post("/user/get-user-details"),
+      response: await authInstance.post("/users/get-user-details"),
     };
   } catch (response) {
     return {
@@ -72,7 +72,7 @@ export const getUserDetailsByUsername = async (username) => {
   try {
     return {
       success: true,
-      response: await authInstance.get(`/user/get-user-details/${username}`),
+      response: await authInstance.get(`/users/get-user-details/${username}`),
     };
   } catch (response) {
     return {
@@ -87,7 +87,7 @@ export const getUserListBySearch = async (search) => {
     return {
       success: true,
       response: await authInstance.get(
-        `/user/get-user-list-search?search=${search}`
+        `/users/get-user-list-search?search=${search}`
       ),
     };
   } catch (response) {
@@ -102,7 +102,7 @@ export const sendFriendRequest = async (data) => {
   try {
     return {
       success: true,
-      response: await authInstance.post(`/user/send-friend-request`, data),
+      response: await authInstance.post(`/users/send-friend-request`, data),
     };
   } catch (response) {
     return {
@@ -116,7 +116,7 @@ export const cancelFriendRequest = async (data) => {
   try {
     return {
       success: true,
-      response: await authInstance.post(`/user/cancel-friend-request`, data),
+      response: await authInstance.post(`/users/cancel-friend-request`, data),
     };
   } catch (response) {
     return {
@@ -130,7 +130,7 @@ export const confirmFriendRequest = async (data) => {
   try {
     return {
       success: true,
-      response: await authInstance.post(`/user/confirm-friend-request`, data),
+      response: await authInstance.post(`/users/confirm-friend-request`, data),
     };
   } catch (response) {
     return {
@@ -144,7 +144,9 @@ export const getUserFriendsList = async (userId) => {
   try {
     return {
       success: true,
-      response: await authInstance.get(`/user/get-user-friends-list/${userId}`),
+      response: await authInstance.get(
+        `/users/get-user-friends-list/${userId}`
+      ),
     };
   } catch (response) {
     return {
@@ -158,7 +160,7 @@ export const getUserNotificationsList = async (userId) => {
   try {
     return {
       success: true,
-      response: await authInstance.get(`/user/get-user-notification-list`),
+      response: await authInstance.get(`/users/get-user-notification-list`),
     };
   } catch (response) {
     return {
@@ -172,7 +174,7 @@ export const getUserAboutDetails = async (userId) => {
   try {
     return {
       success: true,
-      response: await authInstance.get(`/user/get-about-details/${userId}`),
+      response: await authInstance.get(`/users/get-about-details/${userId}`),
     };
   } catch (response) {
     return {
@@ -186,7 +188,7 @@ export const updateUserDetails = async (data) => {
   try {
     return {
       success: true,
-      response: await authInstance.put("/user/update-user-details", data),
+      response: await authInstance.put("/users/update-user-details", data),
     };
   } catch (response) {
     return {
@@ -200,7 +202,7 @@ export const readOneNotification = async (data) => {
   try {
     return {
       success: true,
-      response: await authInstance.post("/user/read-one-notification", data),
+      response: await authInstance.post("/users/read-one-notification", data),
     };
   } catch (response) {
     return {
@@ -215,9 +217,66 @@ export const markAllNotificationAsRead = async (data) => {
     return {
       success: true,
       response: await authInstance.post(
-        "/user/marked-all-notification-as-read",
+        "/users/marked-all-notification-as-read",
         data
       ),
+    };
+  } catch (response) {
+    return {
+      success: false,
+      response: response,
+    };
+  }
+};
+
+// Post Operation
+export const createPost = async (data) => {
+  try {
+    return {
+      success: true,
+      response: await authInstance.post("/posts/create", data),
+    };
+  } catch (response) {
+    return {
+      success: false,
+      response: response,
+    };
+  }
+};
+
+export const deletePost = async (data) => {
+  try {
+    return {
+      success: true,
+      response: await authInstance.delete("/posts/delete", { data }),
+    };
+  } catch (response) {
+    return {
+      success: false,
+      response: response,
+    };
+  }
+};
+
+export const getUserPost = async (userId) => {
+  try {
+    return {
+      success: true,
+      response: await authInstance.get(`/posts/get-user-post/${userId}`),
+    };
+  } catch (response) {
+    return {
+      success: false,
+      response: response,
+    };
+  }
+};
+
+export const getFeedPost = async () => {
+  try {
+    return {
+      success: true,
+      response: await authInstance.get("/posts/get-feed-post"),
     };
   } catch (response) {
     return {

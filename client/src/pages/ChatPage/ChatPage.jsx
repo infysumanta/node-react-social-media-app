@@ -25,7 +25,7 @@ const ChatPage = () => {
   useEffect(() => {
     navigate(`/chats/${user_id}`);
     // userList.map(({ _id, index }) => setChatUser(userList[index]));
-  }, [chatUser]);
+  }, [navigate, user_id]);
 
   return (
     <Layout>

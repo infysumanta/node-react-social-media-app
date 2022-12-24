@@ -1,31 +1,60 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useState } from "react";
+import { getUserPost } from "../../../api";
+import { useSelector } from "react-redux";
+import PostItem from "./Post/PostItem";
+import CreatePost from "./Post/CreatePost";
+import EmptyPost from "./Post/EmptyPost";
+const PostsContain = ({ user }) => {
+  const authUser = useSelector((state) => state.auth.user);
+  const [posts, setPosts] = useState([]);
 
-const PostsContain = () => {
+  const fetchUserPosts = async (userId) => {
+    if (userId) {
+      const result = await getUserPost(userId);
+      if (result.success) {
+        setPosts(result.response?.data?.posts);
+      }
+    }
+  };
+
+  useEffect(() => {
+    fetchUserPosts(user._id);
+  }, [user]);
+
   return (
     <>
-      <div className="w-full bg-white h-auto mt-2 shadow-lg rounded-lg border py-2 px-5">
-        <h1 className="text-xl font-bold my-3">Create Post</h1>
-        <div>
-          <textarea
-            className="w-full border rounded-xl p-3 transition ease-in-out focus:bg-white focus:border-pink-600 focus:outline-none"
-            placeholder="What's on your Mind?"
-          ></textarea>
-          <div className="text-right mt-2">
-            <button className="px-4 py-2 bg-pink-600 rounded-lg text-white">
-              Post
-            </button>
+      {authUser._id === user._id && (
+        <CreatePost
+          refreshData={() => {
+            fetchUserPosts(user._id);
+          }}
+        />
+      )}
+
+      {posts && posts.length > 0 ? (
+        <>
+          <div className="w-full bg-white h-auto mt-2 shadow-sm rounded-lg border py-2 px-5">
+            <div className="flex items-center justify-between ">
+              <h1 className="text-2xl font-bold">Posts</h1>
+            </div>
           </div>
-        </div>
-      </div>
-      <div className="w-full bg-white h-auto mt-2 shadow-lg rounded-lg border py-2 px-5">
-        <div className="flex items-center justify-between ">
-          <h1 className="text-2xl font-bold">Posts</h1>
-        </div>
-      </div>
-      {/* Post Container  */}
-      <div className="w-full bg-white h-auto mt-2 shadow-lg rounded-lg border py-2 px-5">
-        Post Container
-      </div>
+          {/* Post Container  */}
+          {posts &&
+            posts.map((post, index) => (
+              <PostItem
+                key={post._id}
+                post={post}
+                authUser={authUser}
+                refreshData={() => {
+                  fetchUserPosts(user._id);
+                }}
+              />
+            ))}
+        </>
+      ) : (
+        <EmptyPost />
+      )}
     </>
   );
 };

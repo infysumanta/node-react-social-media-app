@@ -14,15 +14,6 @@ const LoginPage = ({ login }) => {
     password: "",
   });
 
-  const resetForm = () => {
-    setUsername("");
-    setPassword("");
-    setError({
-      username: "",
-      password: "",
-    });
-  };
-
   const handleLogin = (e) => {
     e.preventDefault();
     setError((prevState) => ({
