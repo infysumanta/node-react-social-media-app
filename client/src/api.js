@@ -153,3 +153,17 @@ export const getUserFriendsList = async (userId) => {
     };
   }
 };
+
+export const getUserAboutDetails = async (userId) => {
+  try {
+    return {
+      success: true,
+      response: await authInstance.get(`/user/get-about-details`),
+    };
+  } catch (response) {
+    return {
+      success: false,
+      response: response,
+    };
+  }
+};

@@ -102,6 +102,25 @@ exports.getFriendsList = async (req, res) => {
   }
 };
 
+exports.getAboutDetails = async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id).select(
+      "-password -friends -notifications"
+    );
+    return res.status(200).json({
+      success: true,
+      user: user,
+      message: "Request Send",
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      success: false,
+      message: "Something went wrong!",
+    });
+  }
+};
+
 exports.sendFriendRequest = async (req, res) => {
   try {
     const from = req.user._id;
