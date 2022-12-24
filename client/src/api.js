@@ -172,7 +172,7 @@ export const getUserAboutDetails = async (userId) => {
   try {
     return {
       success: true,
-      response: await authInstance.get(`/user/get-about-details`),
+      response: await authInstance.get(`/user/get-about-details/${userId}`),
     };
   } catch (response) {
     return {

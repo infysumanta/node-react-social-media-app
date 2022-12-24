@@ -105,7 +105,8 @@ exports.getFriendsList = async (req, res) => {
 
 exports.getAboutDetails = async (req, res) => {
   try {
-    const user = await User.findById(req.user._id).select(
+    const user_id = req.params.user_id;
+    const user = await User.findById(user_id).select(
       "-password -friends -notifications"
     );
     return res.status(200).json({
