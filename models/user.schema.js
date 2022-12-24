@@ -54,6 +54,10 @@ const userSchema = new mongoose.Schema(
         meta: {
           type: Object,
         },
+        read: {
+          type: Boolean,
+          default: false,
+        },
         date: {
           type: Date,
           default: new Date(),

@@ -154,6 +154,20 @@ export const getUserFriendsList = async (userId) => {
   }
 };
 
+export const getUserNotificationsList = async (userId) => {
+  try {
+    return {
+      success: true,
+      response: await authInstance.get(`/user/get-user-notification-list`),
+    };
+  } catch (response) {
+    return {
+      success: false,
+      response: response,
+    };
+  }
+};
+
 export const getUserAboutDetails = async (userId) => {
   try {
     return {
@@ -173,6 +187,37 @@ export const updateUserDetails = async (data) => {
     return {
       success: true,
       response: await authInstance.put("/user/update-user-details", data),
+    };
+  } catch (response) {
+    return {
+      success: false,
+      response: response,
+    };
+  }
+};
+
+export const readOneNotification = async (data) => {
+  try {
+    return {
+      success: true,
+      response: await authInstance.post("/user/read-one-notification", data),
+    };
+  } catch (response) {
+    return {
+      success: false,
+      response: response,
+    };
+  }
+};
+
+export const markAllNotificationAsRead = async (data) => {
+  try {
+    return {
+      success: true,
+      response: await authInstance.post(
+        "/user/marked-all-notification-as-read",
+        data
+      ),
     };
   } catch (response) {
     return {

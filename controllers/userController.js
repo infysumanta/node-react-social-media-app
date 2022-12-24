@@ -122,6 +122,24 @@ exports.getAboutDetails = async (req, res) => {
   }
 };
 
+exports.getNotifications = async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id).sort({ date: -1 });
+
+    return res.status(203).json({
+      notifications: user.notifications,
+      success: true,
+      message: "Request Send",
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      success: false,
+      message: "Something went wrong!",
+    });
+  }
+};
+
 exports.sendFriendRequest = async (req, res) => {
   try {
     const from = req.user._id;
@@ -308,6 +326,65 @@ exports.updateUserDetails = async (req, res) => {
       user: { ...user._doc, token },
       isEmailExist,
       message: "User Details Updated",
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      success: false,
+      message: "Something went wrong!",
+    });
+  }
+};
+
+exports.readOneNotification = async (req, res) => {
+  try {
+    const { notification_id } = req.body;
+    const user = await User.findOne({
+      _id: req.user._id,
+    });
+
+    const notifications = user.notifications;
+    notifications.forEach((notification, index) => {
+      if (notification._id.toString() === notification_id) {
+        notifications[index].read = true;
+      }
+    });
+
+    user.notifications = notifications;
+    await user.save();
+
+    return res.status(203).json({
+      success: true,
+      notifications,
+      message: "Notification Updated",
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      success: false,
+      message: "Something went wrong!",
+    });
+  }
+};
+exports.markedAllNotificationAsRead = async (req, res) => {
+  try {
+    const { notification_id } = req.body;
+    const user = await User.findOne({
+      _id: req.user._id,
+    });
+
+    const notifications = user.notifications;
+    notifications.forEach((notification, index) => {
+      notifications[index].read = true;
+    });
+
+    user.notifications = notifications;
+    await user.save();
+
+    return res.status(203).json({
+      success: true,
+      notifications,
+      message: "Marked all as Read",
     });
   } catch (error) {
     console.log(error);
