@@ -2,7 +2,7 @@ import React from "react";
 
 const EventsContains = () => {
   return (
-    <div className="w-full bg-white h-auto mt-2 shadow-lg rounded-lg border py-2 px-5">
+    <div className="w-full bg-white h-auto mt-2 shadow-sm rounded-lg border py-2 px-5">
       <div className="flex items-center justify-center ">
         <h1 className="text-2xl font-bold">Events</h1>
       </div>

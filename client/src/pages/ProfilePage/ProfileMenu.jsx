@@ -2,7 +2,7 @@ import React from "react";
 
 const ProfileMenu = ({ profileMenu, setProfileMenu, menuList }) => {
   return (
-    <div className="flex items-center justify-between  shadow-lg">
+    <div className="flex items-center justify-between  shadow-sm">
       <ProfileMenuItem
         profileMenu={profileMenu}
         setProfileMenu={setProfileMenu}

@@ -102,7 +102,7 @@ const Navbar = () => {
         >
           <MdSupervisedUserCircle />
           {userNavMenuShow && (
-            <div className="absolute flex right-2 bg-white rounded shadow-lg flex-col text-base border w-48">
+            <div className="absolute flex right-2 bg-white rounded shadow-sm flex-col text-base border w-48">
               <Link className="px-4 py-2" to={`/user/@${auth.user.username}`}>
                 @{auth.user.username}
               </Link>

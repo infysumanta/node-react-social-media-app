@@ -48,8 +48,8 @@ const ProfileTop = ({ user }) => {
   }, [user]);
 
   return (
-    <div className="bg-purple-400 m-auto w-full rounded-t-lg  shadow-lg border p-3">
-      <div className="w-full bg-gray-100 flex items-center justify-between top-[25%] p-2 rounded-l-full shadow-lg">
+    <div className="bg-purple-400 m-auto w-full rounded-t-lg  shadow-sm border p-3">
+      <div className="w-full bg-gray-100 flex items-center justify-between top-[25%] p-2 rounded-l-full shadow-sm">
         <div className="flex items-center">
           <div className="w-32 rounded-full h-32 bg-pink-700 shadow-xl text-6xl text-white font-bold flex items-center justify-center">
             {user.name && user.name.slice(0, 1)}

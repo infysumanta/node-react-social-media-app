@@ -16,7 +16,7 @@ const FriendsContains = ({ user }) => {
   }, [user]);
 
   return (
-    <div className="w-full bg-white h-auto mt-2 shadow-lg rounded-lg border py-2 px-5">
+    <div className="w-full bg-white h-auto mt-2 shadow-sm rounded-lg border py-2 px-5">
       <div className="flex items-center justify-between ">
         <h1 className="text-2xl font-bold">Friends</h1>
       </div>

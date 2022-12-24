@@ -41,7 +41,7 @@ const LoginPage = ({ login }) => {
   return (
     <NonProtectedRoutes>
       <div className="h-screen flex items-center justify-center bg-pink-100">
-        <div className="p-10 w-full lg:w-3/6 m-auto flex items-center justify-between bg-white rounded-lg shadow-lg ">
+        <div className="p-10 w-full lg:w-3/6 m-auto flex items-center justify-between bg-white rounded-lg shadow-sm ">
           <div className="hidden lg:inline lg:w-1/2 py-7 px-2">
             <h4 className="text-2xl font-semibold text-pink-800">
               Login to the <br />
