@@ -1,10 +1,9 @@
-import React, { useEffect } from "react";
+import React from "react";
 import {
   MdDarkMode,
   MdWbSunny,
   MdOutlineChat,
   MdOutlineNotificationsActive,
-  MdOutlineSettingsSuggest,
   MdSupervisedUserCircle,
   MdSearch,
 } from "react-icons/md";
@@ -80,13 +79,7 @@ const Navbar = () => {
             />
           )}
         </div>
-        {/* Settings */}
-        <Link
-          className="text-3xl cursor-pointer px-3 text-pink-700"
-          to="/settings"
-        >
-          <MdOutlineSettingsSuggest />
-        </Link>
+
         {/* Chat */}
         <Link
           className="text-3xl cursor-pointer px-3 text-pink-700"
@@ -114,6 +107,9 @@ const Navbar = () => {
                 @{auth.user.username}
               </Link>
               <hr />
+              <Link className="px-4 py-2" to={`/settings`}>
+                Settings
+              </Link>
               <hr />
               <div
                 className="px-4 py-2"

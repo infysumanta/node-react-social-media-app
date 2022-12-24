@@ -1,25 +1,24 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { getUserAboutDetails } from "../../api";
 import Button from "../../components/Form/Button";
 import InputWithoutLabel from "../../components/Form/InputWithoutLabel";
 import SelectWithoutLabel from "../../components/Form/SelectWithoutLabel";
 import Layout from "../../components/Layouts/Layout";
 import moment from "moment";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { updateUserDetails } from "../../redux/actions/authActions";
 const SettingsPage = () => {
+  const user = useSelector((state) => state.auth.user);
   const [name, setName] = useState("");
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [gender, setGender] = useState("");
   const [dob, setDOB] = useState("");
 
-  const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const fetchAbout = async () => {
-    const res = await getUserAboutDetails();
+  const fetchAbout = async (userId) => {
+    const res = await getUserAboutDetails(userId);
     const user = res.response?.data?.user;
     setName(user.name);
     setEmail(user.email);
@@ -41,8 +40,8 @@ const SettingsPage = () => {
   };
 
   useEffect(() => {
-    fetchAbout();
-  }, []);
+    fetchAbout(user._id);
+  }, [user]);
   return (
     <Layout>
       <div className="w-full lg:w-1/2 m-auto bg-white p-3 shadow rounded-lg mt-5">
