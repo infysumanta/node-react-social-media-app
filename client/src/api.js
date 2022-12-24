@@ -167,3 +167,17 @@ export const getUserAboutDetails = async (userId) => {
     };
   }
 };
+
+export const updateUserDetails = async (data) => {
+  try {
+    return {
+      success: true,
+      response: await authInstance.put("/user/update-user-details", data),
+    };
+  } catch (response) {
+    return {
+      success: false,
+      response: response,
+    };
+  }
+};

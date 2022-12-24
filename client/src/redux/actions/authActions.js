@@ -8,6 +8,8 @@ export const getAuthAction = (dispatch) => {
     register: (data, navigate) => dispatch(register(data, navigate)),
     getUserDetails: (navigate) => dispatch(getUserDetails(navigate)),
     logout: (navigate) => dispatch(logout(navigate)),
+    updateUserDetails: (data, navigate) =>
+      dispatch(updateUserDetails(data, navigate)),
   };
 };
 
@@ -69,6 +71,22 @@ export const getUserDetails = (navigate) => {
     if (!response.success) {
       console.log(response);
       dispatch(logout(navigate));
+    }
+  };
+};
+
+export const updateUserDetails = (data) => {
+  return async (dispatch) => {
+    const response = await api.updateUserDetails(data);
+    if (!response.success) {
+      toast.error(response.response.response.data?.message);
+    } else {
+      toast.success(response.response.data?.message);
+      localStorage.setItem(
+        "user-login-token",
+        JSON.stringify(response.response.data?.user)
+      );
+      dispatch(setUserDetails(response.response.data?.user));
     }
   };
 };

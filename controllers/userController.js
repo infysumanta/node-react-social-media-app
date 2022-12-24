@@ -1,6 +1,7 @@
 const User = require("./../models/user.schema");
 const FriendRequest = require("./../models/friendRequest.schema");
-
+const jwt = require("jsonwebtoken");
+const config = require("../config");
 exports.getUserDetails = async (req, res) => {
   try {
     return res.status(200).json({
@@ -252,6 +253,61 @@ exports.confirmFriendRequest = async (req, res) => {
       fromUser,
       toUser,
       message: "Congratulations! You are now friend.",
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      success: false,
+      message: "Something went wrong!",
+    });
+  }
+};
+
+exports.updateUserDetails = async (req, res) => {
+  try {
+    const { name, email, username, dob, gender } = req.body;
+    const user_id = req.user._id;
+
+    const isUsernameExist = await User.findOne({
+      username: username,
+      _id: { $ne: user_id },
+    });
+
+    if (isUsernameExist) {
+      return res.status(500).json({
+        success: false,
+        message: "Username already registered with us, please try other",
+      });
+    }
+
+    const isEmailExist = await User.findOne({
+      email: email,
+      _id: { $ne: user_id },
+    });
+    if (isEmailExist) {
+      return res.status(500).json({
+        success: false,
+        message: "Email already registered with us, please try other",
+      });
+    }
+
+    const user = await User.findById(user_id).select("-password -friends");
+    const token = jwt.sign({ id: user._id }, config.JWT_SECRET, {
+      expiresIn: "30d",
+    });
+
+    if (name) user.name = name;
+    if (email) user.email = email;
+    if (gender) user.gender = gender;
+    if (dob) user.dob = dob;
+    if (username) user.username = username;
+    await user.save();
+    console.log(user);
+    return res.status(203).json({
+      success: true,
+      user: { ...user._doc, token },
+      isEmailExist,
+      message: "User Details Updated",
     });
   } catch (error) {
     console.log(error);

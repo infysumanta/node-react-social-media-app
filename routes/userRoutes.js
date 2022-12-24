@@ -8,6 +8,7 @@ const {
   confirmFriendRequest,
   getFriendsList,
   getAboutDetails,
+  updateUserDetails,
 } = require("../controllers/userController");
 const { verifyAuth } = require("../middleware/auth");
 const router = express.Router();
@@ -24,5 +25,7 @@ router.route("/get-about-details").get(getAboutDetails);
 router.route("/send-friend-request").post(sendFriendRequest);
 router.route("/cancel-friend-request").post(cancelFriendRequest);
 router.route("/confirm-friend-request").post(confirmFriendRequest);
+
+router.route("/update-user-details").put(updateUserDetails);
 
 module.exports = router;

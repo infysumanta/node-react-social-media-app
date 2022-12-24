@@ -9,9 +9,7 @@ const authReducer = (state = initialState, action) => {
     case authTypes.SET_USER_DETAILS:
       return {
         ...state,
-        user: {
-          ...action.payload,
-        },
+        user: action.payload,
       };
     case authTypes.LOG_OUT:
       return {
