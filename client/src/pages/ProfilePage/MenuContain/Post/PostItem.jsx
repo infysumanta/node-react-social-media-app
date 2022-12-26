@@ -4,17 +4,32 @@ import { AiOutlineHeart, AiFillHeart, AiOutlineComment } from "react-icons/ai";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import copy from "copy-to-clipboard";
-import { deletePost } from "../../../../api";
+import { deletePost, dislikePost, likePost } from "../../../../api";
+import { useNavigate } from "react-router-dom";
 const PostItem = ({ post, authUser, refreshData }) => {
-  const [isLike, setIsLike] = useState(false);
+  const navigate = useNavigate();
 
-  const handleLike = () => {
-    toast.success("Liked");
-    setIsLike(true);
+  const handleLike = async () => {
+    let body = {
+      postId: post._id,
+      likeBy: authUser._id,
+    };
+    const result = await likePost(body);
+    if (result.success) {
+      toast.success("Liked");
+      refreshData();
+    }
   };
-  const handleDislike = () => {
-    toast.success("Disliked");
-    setIsLike(false);
+  const handleDislike = async () => {
+    let body = {
+      postId: post._id,
+      likeBy: authUser._id,
+    };
+    const result = await dislikePost(body);
+    if (result.success) {
+      toast.success("Disliked");
+      refreshData();
+    }
   };
 
   /* This is a function that is called when the delete button is clicked. It is used to delete the post. */
@@ -22,6 +37,24 @@ const PostItem = ({ post, authUser, refreshData }) => {
     const postDelete = await deletePost({ postId: postId });
     if (postDelete.success) {
       refreshData();
+    }
+  };
+
+  const heartIcon = (postLikes, user) => {
+    if (postLikes.likes.some((obj) => obj.likeBy === user._id)) {
+      return (
+        <AiFillHeart
+          className="text-3xl cursor-pointer"
+          onClick={handleDislike}
+        />
+      );
+    } else {
+      return (
+        <AiOutlineHeart
+          className="text-3xl cursor-pointer"
+          onClick={handleLike}
+        />
+      );
     }
   };
 
@@ -64,27 +97,22 @@ const PostItem = ({ post, authUser, refreshData }) => {
       <hr />
       <div className="flex items-center justify-between mx-4 mt-3 mb-2">
         <div className="w-full flex items-center justify-center font-semibold border-r text-red-600">
-          {!isLike ? (
-            <AiOutlineHeart
-              className="text-3xl cursor-pointer"
-              onClick={handleLike}
-            />
-          ) : (
-            <AiFillHeart
-              className="text-3xl cursor-pointer"
-              onClick={handleDislike}
-            />
-          )}
+          {heartIcon(post, authUser)}
+          <span className="ml-3">{post.likes && post.likes.length} Likes</span>
         </div>
         <div className="w-full flex items-center justify-center  font-semibold text-orange-800">
-          <AiOutlineComment className="text-3xl" />
+          <AiOutlineComment
+            className="text-3xl cursor-pointer"
+            onClick={() => {
+              navigate(`/posts/${post._id}?from=comment-click`);
+            }}
+          />
         </div>
         <div className="w-full flex items-center justify-center  font-semibold border-l text-purple-600">
           <MdShare
             className="text-3xl cursor-pointer"
             onClick={() => {
-              const url = `${window.location.origin}/posts/${post._id}`;
-              console.log(url);
+              const url = `${window.location.origin}/posts/${post._id}?from=copy-share`;
               copy(url);
             }}
           />

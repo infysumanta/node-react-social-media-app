@@ -285,3 +285,45 @@ export const getFeedPost = async () => {
     };
   }
 };
+
+export const getSinglePost = async (userId) => {
+  try {
+    return {
+      success: true,
+      response: await authInstance.get(`/posts/get-single-post/${userId}`),
+    };
+  } catch (response) {
+    return {
+      success: false,
+      response: response,
+    };
+  }
+};
+
+export const likePost = async (data) => {
+  try {
+    return {
+      success: true,
+      response: await authInstance.post(`/posts/post-like`, data),
+    };
+  } catch (response) {
+    return {
+      success: false,
+      response: response,
+    };
+  }
+};
+
+export const dislikePost = async (data) => {
+  try {
+    return {
+      success: true,
+      response: await authInstance.post(`/posts/post-dislike`, data),
+    };
+  } catch (response) {
+    return {
+      success: false,
+      response: response,
+    };
+  }
+};

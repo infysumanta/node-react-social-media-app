@@ -8,6 +8,7 @@ import ChatPage from "./pages/ChatPage/ChatPage";
 import SettingsPage from "./pages/SettingsPage/SettingsPage";
 import NotificationPage from "./pages/NotificationPage/NotificationPage";
 import NotFound from "./pages/NotFound";
+import PostPage from "./pages/ProfilePage/MenuContain/PostPage/PostPage";
 function App() {
   return (
     <>
@@ -20,6 +21,7 @@ function App() {
         <Route path="/chats/:user_id" element={<ChatPage />} />
         <Route path="/settings" element={<SettingsPage />} />
         <Route path="/notifications" element={<NotificationPage />} />
+        <Route path="/posts/:post_id" element={<PostPage />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </>
