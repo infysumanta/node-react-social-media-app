@@ -1,13 +1,23 @@
 import React from "react";
 import { useState } from "react";
+import toast from "react-hot-toast";
+import { saveComment } from "../../../../api";
 
-const CommentInput = () => {
+const CommentInput = ({ post_id, refreshData }) => {
   const [description, setDescription] = useState("");
 
-  const handleSubmitComments = (e) => {
+  const handleSubmitComments = async (e) => {
     e.preventDefault();
-    alert(description);
-    setDescription("");
+    let body = {
+      description: description,
+      post_id: post_id,
+    };
+    const result = await saveComment(body);
+    if (result.success) {
+      toast.success(result.response?.data?.message);
+      refreshData();
+      setDescription("");
+    }
   };
 
   return (

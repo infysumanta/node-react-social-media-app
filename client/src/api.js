@@ -327,3 +327,45 @@ export const dislikePost = async (data) => {
     };
   }
 };
+
+export const saveComment = async (data) => {
+  try {
+    return {
+      success: true,
+      response: await authInstance.post(`/comments/create`, data),
+    };
+  } catch (response) {
+    return {
+      success: false,
+      response: response,
+    };
+  }
+};
+
+export const getCommentByPost = async (post_id) => {
+  try {
+    return {
+      success: true,
+      response: await authInstance.get(`/comments/comments-by-post/${post_id}`),
+    };
+  } catch (response) {
+    return {
+      success: false,
+      response: response,
+    };
+  }
+};
+
+export const deleteComments = async (data) => {
+  try {
+    return {
+      success: true,
+      response: await authInstance.delete(`/comments/delete`, { data }),
+    };
+  } catch (response) {
+    return {
+      success: false,
+      response: response,
+    };
+  }
+};

@@ -1,6 +1,19 @@
 import React from "react";
-
-const CommentItem = ({ isChild }) => {
+import TimeAgo from "react-timeago";
+import { MdDelete } from "react-icons/md";
+import { deleteComments } from "../../../../api";
+import toast from "react-hot-toast";
+const CommentItem = ({ isChild, comment, refreshData }) => {
+  const handleCommentClick = async () => {
+    let data = {
+      comment_id: comment._id,
+    };
+    const result = await deleteComments(data);
+    if (result.success) {
+      toast.success(result.response?.data?.message);
+      refreshData();
+    }
+  };
   return (
     <article
       className={`p-2 mb-2 text-base rounded-lg border-b-2 border-l-2 ${
@@ -15,17 +28,22 @@ const CommentItem = ({ isChild }) => {
               src="https://flowbite.com/docs/images/people/profile-picture-2.jpg"
               alt="Michael Gough"
             />
-            Michael Gough
+            {comment.commentBy.name}
           </p>
-          <p className="text-sm text-gray-600">Feb. 8, 2022</p>
+          <p className="text-sm text-gray-600">
+            {" "}
+            (@{comment.commentBy.username}) -{" "}
+            <TimeAgo date={comment.createdAt} />
+          </p>
+        </div>
+        <div>
+          <MdDelete
+            className="text-gray-700 italic cursor-pointer"
+            onClick={handleCommentClick}
+          />
         </div>
       </footer>
-      <p className="text-gray-500 ml-8 pl-2">
-        Very straight-to-point article. Really worth time reading. Thank you!
-        But tools are just the instruments for the UX designers. The knowledge
-        of the design tools are as important as the creation of the design
-        strategy.
-      </p>
+      <p className="text-gray-800 italic ml-8 pl-2">{comment.description}</p>
     </article>
   );
 };

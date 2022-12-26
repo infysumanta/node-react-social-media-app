@@ -103,17 +103,6 @@ const PostPage = () => {
                 <hr />
                 <div className="flex items-center justify-between mx-4 mt-3 mb-2">
                   <div className="w-full flex items-center justify-center font-semibold border-r text-red-600">
-                    {/* {!isLike ? (
-                      <AiOutlineHeart
-                        className="text-3xl cursor-pointer"
-                        onClick={handleLike}
-                      />
-                    ) : (
-                      <AiFillHeart
-                        className="text-3xl cursor-pointer"
-                        onClick={handleDislike}
-                      />
-                    )} */}
                     {heartIcon(post, authUser)}
                     <span className="ml-3">
                       {post.likes && post.likes.length} Likes
@@ -135,7 +124,7 @@ const PostPage = () => {
               </div>
             </div>
             <div className="post-comments">
-              <CommentContain />
+              <CommentContain post_id={post_id} />
             </div>
           </>
         ) : (
