@@ -30,7 +30,7 @@ router.route("/send-friend-request").post(sendFriendRequest);
 router.route("/cancel-friend-request").post(cancelFriendRequest);
 router.route("/confirm-friend-request").post(confirmFriendRequest);
 
-router.route("/update-user-details").post(updateUserDetails);
+router.route("/update-user-details").put(updateUserDetails);
 
 router.route("/read-one-notification").post(readOneNotification);
 router

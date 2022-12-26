@@ -2,11 +2,12 @@ const User = require("./../models/user.schema");
 const FriendRequest = require("./../models/friendRequest.schema");
 const jwt = require("jsonwebtoken");
 const config = require("../config");
+
 exports.getUserDetails = async (req, res) => {
   try {
     return res.status(200).json({
       success: true,
-      user: { user: req.user },
+      user: req.user,
       message: "User Validated",
     });
   } catch (error) {
