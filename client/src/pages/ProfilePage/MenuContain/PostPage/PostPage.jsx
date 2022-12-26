@@ -1,14 +1,9 @@
 import React from "react";
 import { useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import {
-  deletePost,
-  getSinglePost,
-  likePost,
-  dislikePost,
-} from "../../../../api";
-import { MdModeEditOutline, MdDelete, MdShare } from "react-icons/md";
-import { AiOutlineHeart, AiFillHeart, AiOutlineComment } from "react-icons/ai";
+import { useParams } from "react-router-dom";
+import { getSinglePost, likePost, dislikePost } from "../../../../api";
+import { MdShare } from "react-icons/md";
+import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import copy from "copy-to-clipboard";
@@ -16,6 +11,7 @@ import TimeAgo from "react-timeago";
 import { useSelector } from "react-redux";
 import Layout from "../../../../components/Layouts/Layout";
 import EmptyData from "../Post/EmptyData";
+import CommentContain from "./CommentContain";
 
 const PostPage = () => {
   const [post, setPost] = useState({});
@@ -26,7 +22,6 @@ const PostPage = () => {
   const fetchPost = async () => {
     const result = await getSinglePost(post_id);
     setPost(result.response?.data?.post);
-    const postResult = result.response?.data?.post;
   };
 
   const handleLike = async () => {
@@ -140,10 +135,7 @@ const PostPage = () => {
               </div>
             </div>
             <div className="post-comments">
-              <div className="rounded-lg border bg-white p-3 shadow mt-5">
-                <span className="font-semibold my-4">Comments: </span>
-                <hr />
-              </div>
+              <CommentContain />
             </div>
           </>
         ) : (
