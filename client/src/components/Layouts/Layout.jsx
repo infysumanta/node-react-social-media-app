@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import ErrorBoundary from "../../ErrorBoundary";
 import { getUserDetails } from "../../redux/actions/authActions";
 import Footer from "./Footer";
 import Header from "./Header";
@@ -15,9 +16,11 @@ const Layout = ({ children }) => {
   });
   return (
     <>
-      <Header />
-      <div className="py-[4rem] bg-gray-100 min-h-[53rem]">{children}</div>
-      <Footer />
+      <ErrorBoundary>
+        <Header />
+        <div className="py-[4rem] bg-gray-100 min-h-[53rem]">{children}</div>
+        <Footer />
+      </ErrorBoundary>
     </>
   );
 };
