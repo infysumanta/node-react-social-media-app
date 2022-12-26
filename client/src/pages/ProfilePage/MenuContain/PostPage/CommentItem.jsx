@@ -3,6 +3,7 @@ import TimeAgo from "react-timeago";
 import { MdDelete } from "react-icons/md";
 import { deleteComments } from "../../../../api";
 import toast from "react-hot-toast";
+import { Link } from "react-router-dom";
 const CommentItem = ({ isChild, comment, refreshData }) => {
   const handleCommentClick = async () => {
     let data = {
@@ -22,18 +23,23 @@ const CommentItem = ({ isChild, comment, refreshData }) => {
     >
       <footer className="flex justify-between items-center mb-2">
         <div className="flex items-center ">
-          <p className="inline-flex items-center mr-3 text-sm text-gray-900 ">
+          <Link
+            className="inline-flex items-center mr-3 text-sm text-gray-900 "
+            to={`/user/@${comment.commentBy.username}`}
+          >
             <img
               className="mr-2 w-6 h-6 rounded-full"
               src="https://flowbite.com/docs/images/people/profile-picture-2.jpg"
               alt="Michael Gough"
             />
+
             {comment.commentBy.name}
-          </p>
+          </Link>
           <p className="text-sm text-gray-600">
-            {" "}
-            (@{comment.commentBy.username}) -{" "}
-            <TimeAgo date={comment.createdAt} />
+            <Link to={`/user/@${comment.commentBy.username}`}>
+              (@{comment.commentBy.username})
+            </Link>{" "}
+            - <TimeAgo date={comment.createdAt} />
           </p>
         </div>
         <div>

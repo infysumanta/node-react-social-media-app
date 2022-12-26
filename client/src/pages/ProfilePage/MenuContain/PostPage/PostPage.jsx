@@ -1,6 +1,6 @@
 import React from "react";
 import { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { getSinglePost, likePost, dislikePost } from "../../../../api";
 import { MdShare } from "react-icons/md";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
@@ -79,7 +79,10 @@ const PostPage = () => {
             <div className="post-header">
               <div className="w-full bg-white h-auto mt-2 shadow-sm border rounded-lg">
                 <div className="flex items-center justify-between m-3">
-                  <div className="flex items-center">
+                  <Link
+                    className="flex items-center"
+                    to={`/user/@${post.postBy.username}`}
+                  >
                     <img
                       alt="sks"
                       className="h-8 w-8 rounded-full"
@@ -94,7 +97,7 @@ const PostPage = () => {
                         <TimeAgo date={post.createdAt} />
                       </span>
                     </div>
-                  </div>
+                  </Link>
                 </div>
                 <hr />
                 <div className="bg-gray-50 rounded min-h-[1rem] m-3 p-4 border text-2xl font-semibold">

@@ -5,7 +5,7 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import copy from "copy-to-clipboard";
 import { deletePost, dislikePost, likePost } from "../../../../api";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 const PostItem = ({ post, authUser, refreshData }) => {
   const navigate = useNavigate();
 
@@ -61,7 +61,10 @@ const PostItem = ({ post, authUser, refreshData }) => {
   return (
     <div className="w-full bg-white h-auto mt-2 shadow-sm border rounded-lg">
       <div className="flex items-center justify-between m-3">
-        <div className="flex items-center">
+        <Link
+          className="flex items-center"
+          to={`/user/@${post.postBy.username}`}
+        >
           <img
             alt="sks"
             className="h-8 w-8 rounded-full"
@@ -75,7 +78,7 @@ const PostItem = ({ post, authUser, refreshData }) => {
               @{post.postBy.username} - <TimeAgo date={post.createdAt} />
             </span>
           </div>
-        </div>
+        </Link>
         {post.postBy._id === authUser._id && (
           <div className="flex">
             <span className="hidden">
