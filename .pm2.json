@@ -1,0 +1,9 @@
+{
+    "apps": [
+        {
+            "name": "Social_Media_App",
+            "script": "npm",
+            "args": "start"
+        }
+    ]
+}
