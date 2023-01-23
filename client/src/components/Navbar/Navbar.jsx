@@ -81,19 +81,19 @@ const Navbar = () => {
         </div>
 
         {/* Chat */}
-        <Link
+        {/* <Link
           className="text-3xl cursor-pointer px-3 text-pink-700"
           to="/chats"
         >
           <MdOutlineChat />
-        </Link>
-        {/* Notification */}
+        </Link> */}
+        {/* Notification
         <Link
           className="text-3xl cursor-pointer px-3 text-pink-700"
           to="/notifications"
         >
           <MdOutlineNotificationsActive />
-        </Link>
+        </Link> */}
         {/* UserProfile */}
         <div
           className="text-3xl cursor-pointer px-3 text-pink-700"
